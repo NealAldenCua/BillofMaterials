@@ -3,7 +3,7 @@ const path = require('path');
 
 function createWindow() {
   const win = new BrowserWindow({
-    title: "Bill of Mats",
+    title: "Bill of Materials",
     frame:true,
 
     width: 800,

@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div>
       <main>
-        <h1>Dashboard</h1>
+        <h1 style={{margin: "50px"}}>Dashboard</h1>
       </main>
     </div>
   );

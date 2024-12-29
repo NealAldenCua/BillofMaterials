@@ -46,7 +46,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="Dashboard"
+            href=""
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -90,7 +90,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: 'center' }}>
-                    <Link style={{textDecoration: "none", color:"white"}} to={`/${page}`}>
+                    <Link style={{textDecoration: "none", color:"black"}} to={`/${page}`}>
                       {page}
                     </Link>
                   </Typography>
@@ -146,20 +146,3 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar; 
-
-//  const Navbar = () => {
-//    return (
-//      <nav>
-//        <ul>
-//          <li>
-//            <Link to="/">Dashboard</Link>
-//          </li>
-//          <li>
-//            <Link to="/bill-of-materials">Bill of Materials</Link>
-//          </li>
-//        </ul>
-//      </nav>
-//    );
-//  }
-
-//  export default Navbar

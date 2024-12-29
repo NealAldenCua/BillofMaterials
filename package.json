@@ -2,23 +2,64 @@
   "name": "bom",
   "version": "0.1.0",
   "private": true,
+  "main": "public/main.js",
+  "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
     "@mui/material": "^6.3.0",
+    "concurrently": "^9.1.1",
     "cra-template": "1.2.0",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^3.0.1",
     "firebase": "^11.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "wait-on": "^8.0.1",
+    "yarn": "^1.22.22"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "electron .",
+    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start \" \"yarn electron:start\" ",
+    "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
+    "electron:start": "wait-on http://127.0.0.1:3000 && electron ."
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.electron.trackerR324",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "public/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": "NSIS"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "target": [
+        "snap",
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +81,7 @@
   },
   "devDependencies": {
     "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
     "electron-packager": "^17.1.2",
     "electron-winstaller": "^5.4.0",
     "web-vitals": "^4.2.4"

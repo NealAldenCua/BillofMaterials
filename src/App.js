@@ -1,15 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import BOM from "./components/BOM";
+import { Route, Routes } from 'react-router-dom';
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import BOM from "./pages/BOM";
 
 const App = () => (
-  <Router>
+  <>
+    <Navbar />
+
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/bom/:id" element={<BOM />} />
+      <Route path='Dashboard' element={<Dashboard />}></Route>
+      <Route path='Bill of Materials' element={<BOM />}></Route>
     </Routes>
-  </Router>
+  </>
 );
 
 export default App;

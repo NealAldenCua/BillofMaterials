@@ -1,109 +1,8 @@
-// import React, { useState, useEffect } from "react";
-// import { database } from "../firebase";
-// import { ref, onValue, push, remove, update } from "firebase/database"; // Import `update`
-// import { Link } from "react-router-dom";
-
-// const Dashboard = () => {
-//   const [projects, setProjects] = useState([]);
-//   const [newProject, setNewProject] = useState("");
-//   const [editingId, setEditingId] = useState(null); // Track the project being edited
-//   const [editingName, setEditingName] = useState(""); // Track the updated name
-
-//   useEffect(() => {
-//     const projectsRef = ref(database, "projects");
-//     onValue(projectsRef, (snapshot) => {
-//       const data = snapshot.val();
-//       const projectsArray = data
-//         ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
-//         : [];
-//       setProjects(projectsArray);
-//     });
-//   }, []);
-
-//   const addProject = () => {
-//     if (newProject.trim() === "") return;
-//     const projectsRef = ref(database, "projects");
-//     push(projectsRef, { name: newProject });
-//     setNewProject("");
-//   };
-
-//   const deleteProject = (id) => {
-//     if (window.confirm("Are you sure you want to delete this project?")) {
-//       const projectRef = ref(database, `projects/${id}`);
-//       remove(projectRef).catch((error) =>
-//         console.error("Error deleting project:", error)
-//       );
-//     }
-//   };
-
-//   const startEditing = (id, name) => {
-//     setEditingId(id);
-//     setEditingName(name);
-//   };
-
-//   const cancelEditing = () => {
-//     setEditingId(null);
-//     setEditingName("");
-//   };
-
-//   const updateProject = (id) => {
-//     if (editingName.trim() === "") return;
-//     const projectRef = ref(database, `projects/${id}`);
-//     update(projectRef, { name: editingName })
-//       .then(() => {
-//         setEditingId(null);
-//         setEditingName("");
-//       })
-//       .catch((error) => console.error("Error updating project:", error));
-//   };
-
-//   return (
-//     <div>
-//       <h1>Dashboard</h1>
-//       <input
-//         type="text"
-//         placeholder="New Project Name"
-//         value={newProject}
-//         onChange={(e) => setNewProject(e.target.value)}
-//       />
-//       <button onClick={addProject}>Add Project</button>
-//       <ul>
-//         {projects.map((project) => (
-//           <li key={project.id}>
-//             {editingId === project.id ? (
-//               <>
-//                 <input
-//                   type="text"
-//                   value={editingName}
-//                   onChange={(e) => setEditingName(e.target.value)}
-//                 />
-//                 <button onClick={() => updateProject(project.id)}>Save</button>
-//                 <button onClick={cancelEditing}>Cancel</button>
-//               </>
-//             ) : (
-//               <>
-//                 <Link to={`/project/${project.id}`}>{project.name}</Link>
-//                 <button onClick={() => startEditing(project.id, project.name)}>
-//                   Edit
-//                 </button>
-//                 <button onClick={() => deleteProject(project.id)}>Delete</button>
-//               </>
-//             )}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-
 import React, { useState, useEffect } from "react";
 import { database } from "../firebase";
 import { ref, onValue, push, update, remove } from "firebase/database";
 
-const Dashboard = () => {
+const BOM = () => {
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
     kindOfMaterial: "",
@@ -195,14 +94,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Bill of Materials</h1>
       <form>
         <select
           name="kindOfMaterial"
           value={newProject.kindOfMaterial}
           onChange={handleChange}
         >
-          <option value="">Select Kind of Material</option>
+          <option value="" disabled selected>Select Kind of Material</option>
           <option value="Metal Fabrication/Structural">Metal Fabrication/Structural</option>
           <option value="Accessories">Accessories</option>
           <option value="Mechanical Conversion-1">Mechanical Conversion-1</option>
@@ -324,4 +223,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default BOM;

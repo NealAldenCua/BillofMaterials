@@ -5,6 +5,7 @@ import { ref, onValue, push, update, remove } from "firebase/database";
 const BOM = () => {
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
+    projectName: "",
     kindOfMaterial: "",
     itemNumber: "",
     itemDescription: "",
@@ -146,7 +147,7 @@ const BOM = () => {
     border: "1px solid #ccc",
     borderRadius: "5px",
     fontSize: "14px",
-    width: "170px", // Limiting width for landscape
+    width: "150px", // Limiting width for landscape
   };
 
   const selectStyle = {
@@ -180,6 +181,14 @@ const BOM = () => {
   <h1 style={{margin: "50px"}}>Bill of Materials</h1>
 
     <form style={formStyle}>
+      <input
+        type="text"
+        name="projectName"
+        placeholder="Project Name"
+        value={newProject.projectName || ""}
+        onChange={handleChange}
+        style={inputStyle}
+      />
       <select
         name="kindOfMaterial"
         value={newProject.kindOfMaterial}
@@ -276,6 +285,7 @@ const BOM = () => {
   <table style={tableStyle}>
       <thead>
         <tr>
+          <th style={headerStyle}>Project Name</th>
           <th style={headerStyle}>Kind of Material</th>
           <th style={headerStyle}>Item Number</th>
           <th style={headerStyle}>Item Description</th>
@@ -299,6 +309,7 @@ const BOM = () => {
               backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#ffffff",
             }}
           >
+            <td style={cellStyle}>{project.projectName}</td>
             <td style={cellStyle}>{project.kindOfMaterial}</td>
             <td style={cellStyle}>{project.itemNumber}</td>
             <td style={cellStyle}>{project.itemDescription}</td>

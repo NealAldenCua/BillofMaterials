@@ -62,10 +62,18 @@ const BOM = () => {
 
     if (editingProjectId) {
       const projectRef = ref(database, `projects/${editingProjectId}`);
-      update(projectRef, projectData);
+      update(projectRef, projectData).then(() => {
+        alert("Project successfully updated!");
+      }).catch((error) => {
+        alert("Error updating project: " + error.message);
+      });
     } else {
       const projectsRef = ref(database, "projects");
-      push(projectsRef, projectData);
+      push(projectsRef, projectData).then(() => {
+        alert("Project successfully added!");
+      }).catch((error) => {
+        alert("Error adding project: " + error.message);
+      });
     }
 
     setNewProject({
@@ -88,8 +96,15 @@ const BOM = () => {
   };
 
   const handleDelete = (id) => {
-    const projectRef = ref(database, `projects/${id}`);
-    remove(projectRef);
+    const confirmation = window.confirm("Are you sure you want to delete this project?");
+    if (confirmation) {
+      const projectRef = ref(database, `projects/${id}`);
+      remove(projectRef).then(() => {
+        alert("Project successfully deleted!");
+      }).catch((error) => {
+        alert("Error deleting project: " + error.message);
+      });
+    }
   };
 
   const tableStyle = {
@@ -149,6 +164,15 @@ const BOM = () => {
     cursor: "pointer",
     maxwidth: "100%", // Make the button full width in the landscape layout
   };
+
+    // Function to calculate the total amount of all materials
+    const calculateOverallTotal = () => {
+      return projects.reduce((total, project) => {
+        return total + (project.totalAmountOfKindOfMaterial || 0);
+      }, 0);
+    };
+  
+    const overallTotal = calculateOverallTotal();
 
   
   return (
@@ -295,6 +319,15 @@ const BOM = () => {
             </td>
           </tr>
         ))}
+
+        {/* Add a row for the overall total */}
+       <tr>
+          <td colSpan="11" style={{ ...cellStyle, fontWeight: "bold", textAlign: "right" }}>
+            Overall Total:
+          </td>
+          <td style={{ ...cellStyle, fontWeight: "bold" }}>{calculateOverallTotal().toFixed(2)}</td>
+          <td style={cellStyle}></td>
+       </tr>
       </tbody>
     </table>
     </>
